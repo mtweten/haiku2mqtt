@@ -1,11 +1,11 @@
 FROM node:alpine
 
+RUN apk add --no-cache git && npm install -g babel-cli
+
 WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
 
 COPY . .
 
-CMD [ "npm", "start" ]
+RUN npm install && npm run build 
+
+ENTRYPOINT [ "node", "dist/index.js" ]
